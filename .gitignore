@@ -1,0 +1,5 @@
+*.csv
+*.json
+*.swp
+__pycache__/*
+*.db
