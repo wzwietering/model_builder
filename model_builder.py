@@ -4,9 +4,6 @@ from keras.models import Model
 from layer_builders import dense_builder, conv_builder
 
 class ModelBuilder():
-    def __init__(self):
-        pass
-
     def build(self, config, input_shape, output_shape):
         inputs = Input(shape=input_shape)
         model = inputs
