@@ -1,7 +1,11 @@
-from keras.layers import SimpleRNN, LSTM, GRU, Bidirectional, Dropout
+from keras.layers import SimpleRNN, LSTM, GRU, Bidirectional, Dropout, Reshape
 
 def build_layer(model, layer):
     layer_type = determine_layer(layer)
+    output_shape = model._keras_shape
+    if len(output_shape) == 4: # If the previous layer is conv2d
+        new_shape = (output_shape[1] * output_shape[2], output_shape[3])
+        model = Reshape(new_shape)(model)
     recurrent_layer = layer_type(layer["units"], return_sequences=True)
     if "bidirectional" in layer and layer["bidirectional"]:
         recurrent_layer = Bidirectional(recurrent_layer)
