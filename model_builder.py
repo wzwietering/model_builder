@@ -1,7 +1,7 @@
 from keras.layers import Activation, Input
 from keras.models import Model
 
-from layer_builders import dense_builder
+from layer_builders import dense_builder, conv_builder
 
 class ModelBuilder():
     def __init__(self):
@@ -19,5 +19,7 @@ class ModelBuilder():
     def __build_layer(self, model, layer):
         if layer["name"] == "dense":
             return dense_builder.build_layer(model, layer)
+        elif layer["name"] == "conv2d":
+            return conv_builder.build_layer(model, layer)
         else:
             raise ValueError(f"Unknown layer type '{layer['name']}'")
