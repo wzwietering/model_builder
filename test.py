@@ -9,6 +9,6 @@ def test_config(filename, input_shape):
     print(model.summary())
 
 if __name__ == "__main__":
-    test_config("model.json", (28,28,1))
-    test_config("model_rnn.json", (28,28))
-    test_config("model_crnn.json", (28,28,1))
+    test_config("examples/model.json", (28,28,1))
+    test_config("examples/model_rnn.json", (28,28))
+    test_config("examples/model_crnn.json", (28,28,1))
