@@ -1,7 +1,7 @@
 from keras.layers import Activation, Input
 from keras.models import Model
 
-from layer_builders import dense_builder, conv_builder
+from layer_builders import dense_builder, conv_builder, rnn_builder
 
 class ModelBuilder():
     def build(self, config, input_shape, output_shape):
@@ -18,5 +18,7 @@ class ModelBuilder():
             return dense_builder.build_layer(model, layer)
         elif layer["name"] == "conv2d":
             return conv_builder.build_layer(model, layer)
+        elif layer["name"] == "rnn" or layer["name"] == "lstm" or layer["name"] == "gru":
+            return rnn_builder.build_layer(model, layer)
         else:
             raise ValueError(f"Unknown layer type '{layer['name']}'")

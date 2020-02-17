@@ -1,0 +1,22 @@
+{
+    "loss": "categorical_crossentropy",
+    "optimizer": "adam",
+    "layers": [
+        {
+            "name": "rnn",
+            "units": 40,
+            "dropout": 0.2
+        },
+        {
+            "name": "gru",
+            "units": 40,
+            "dropout": 0.2,
+            "bidirectional": true
+        },
+        {
+            "name": "lstm",
+            "units": 40,
+            "dropout": 0.2
+        }
+    ]
+}
