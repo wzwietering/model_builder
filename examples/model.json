@@ -1,6 +1,7 @@
 {
     "loss": "categorical_crossentropy",
     "optimizer": "adam",
+    "activation": "softmax",
     "layers": [
         {
             "name": "dense",

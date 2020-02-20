@@ -9,7 +9,8 @@ class ModelBuilder():
         model = inputs
         for layer in config["layers"]:
             model = self.__build_layer(model, layer)
-        model = Model(inputs=inputs, outputs=model)
+        activation = Activation(config["activation"], name=config["activation"])(model)
+        model = Model(inputs=inputs, outputs=activation)
         model.compile(optimizer=config["optimizer"], loss=config["loss"])
         return model
         
