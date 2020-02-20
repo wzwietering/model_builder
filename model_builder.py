@@ -1,5 +1,5 @@
-from keras.layers import Activation, Input
-from keras.models import Model
+from tensorflow.keras.layers import Activation, Input, Dense
+from tensorflow.keras.models import Model
 
 from layer_builders import dense_builder, conv_builder, rnn_builder
 
@@ -9,11 +9,12 @@ class ModelBuilder():
         model = inputs
         for layer in config["layers"]:
             model = self.__build_layer(model, layer)
+        model = Dense(output_shape)(model)
         activation = Activation(config["activation"], name=config["activation"])(model)
         model = Model(inputs=inputs, outputs=activation)
         model.compile(optimizer=config["optimizer"], loss=config["loss"])
         return model
-        
+
     def __build_layer(self, model, layer):
         if layer["name"] == "dense":
             return dense_builder.build_layer(model, layer)

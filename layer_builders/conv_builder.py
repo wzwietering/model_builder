@@ -1,4 +1,4 @@
-from keras.layers import Conv2D, MaxPooling2D, Dropout, AveragePooling2D
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, AveragePooling2D
 
 def build_layer(model, layer):
     strides = layer.get(tuple("strides"), (1,1))
