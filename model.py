@@ -1,6 +1,6 @@
 from tensorflow.keras.layers import Activation, Dense
 import tensorflow.keras.models
-from models.input_layer import InputLayer
+from layers.input_layer import InputLayer
 
 class Model():
     def __init__(self, loss, optimizer, activation):
@@ -17,7 +17,8 @@ class Model():
             root.children = self.root.children
         self.root = root
 
-    def create(self, output_shape):
+    def create(self, input_shape, output_shape):
+        self.set_input_shape(input_shape)
         if not self.root:
             raise ValueError("Model has no input, use 'Model.set_input_shape' before creating the model")
         input_layer = self.root.create()

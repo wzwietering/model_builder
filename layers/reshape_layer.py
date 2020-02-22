@@ -1,5 +1,5 @@
 from tensorflow.keras.layers import Reshape
-from models.layer import Layer
+from layers.layer import Layer
 
 # Reshape automatically determines how to reshape. Reshaping is done by
 # multiplying the original dimensions from left to right with eachother.

@@ -1,8 +1,8 @@
-from models.model import Model
-from models.conv2d_layer import Conv2DLayer
-from models.dense_layer import DenseLayer
-from models.rnn_layer import RNNLayer
-from models.reshape_layer import ReshapeLayer
+from model import Model
+from layers.conv2d_layer import Conv2DLayer
+from layers.dense_layer import DenseLayer
+from layers.rnn_layer import RNNLayer
+from layers.reshape_layer import ReshapeLayer
 
 class Parser():
     def parse_config(self, config):
@@ -17,22 +17,31 @@ class Parser():
 
     def __parse_layer(self, layer):
         if layer["name"] == "dense":
-            dropout = layer.get("dropout", None)
-            return DenseLayer(None, layer["units"], dropout)
+            return self.__parse_dense(layer)
         elif layer["name"] == "conv2d":
-            filters = layer["filters"]
-            kernel_size = tuple(layer["kernel_size"])
-            strides = self.__get_tuple(layer, "strides", (1,1))
-            max_pooling = self.__get_tuple(layer, "max_pooling", None)
-            average_pooling = self.__get_tuple(layer, "average_pooling", None)
-            dropout = layer.get("dropout", None)
-            return Conv2DLayer(None, filters, kernel_size, strides, max_pooling, average_pooling, dropout)
+            return self.__parse_conv2d(layer)
         elif layer["name"] in self.__rnn_names():
-            bidirectional = layer.get("bidirectional", False)
-            dropout = layer.get("dropout", None)
-            return RNNLayer(layer["name"], None, layer["units"], bidirectional, dropout)
+            return self.__parse_rnn(layer)
         else:
             raise ValueError(f"Unknown layer type '{layer['name']}'")
+
+    def __parse_dense(self, layer):
+        dropout = layer.get("dropout", None)
+        return DenseLayer(None, layer["units"], dropout)
+
+    def __parse_conv2d(self, layer):
+        filters = layer["filters"]
+        kernel_size = tuple(layer["kernel_size"])
+        strides = self.__get_tuple(layer, "strides", (1,1))
+        max_pooling = self.__get_tuple(layer, "max_pooling", None)
+        average_pooling = self.__get_tuple(layer, "average_pooling", None)
+        dropout = layer.get("dropout", None)
+        return Conv2DLayer(None, filters, kernel_size, strides, max_pooling, average_pooling, dropout)
+
+    def __parse_rnn(self, layer):
+        bidirectional = layer.get("bidirectional", False)
+        dropout = layer.get("dropout", None)
+        return RNNLayer(layer["name"], None, layer["units"], bidirectional, dropout)
 
     # Json has no tuples, so they are stored as list, but we want a tuple
     def __get_tuple(self, layer, key, default=None):

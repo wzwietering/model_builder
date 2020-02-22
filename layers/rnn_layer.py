@@ -1,5 +1,5 @@
 from tensorflow.keras.layers import SimpleRNN, LSTM, GRU, Bidirectional, Dropout, Reshape
-from models.layer import Layer
+from layers.layer import Layer
 
 class RNNLayer(Layer):
     def __init__(self,

@@ -1,5 +1,5 @@
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, AveragePooling2D
-from models.layer import Layer
+from layers.layer import Layer
 
 class Conv2DLayer(Layer):
     def __init__(self,

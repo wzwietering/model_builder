@@ -1,5 +1,5 @@
 from tensorflow.keras.layers import Dense, Dropout
-from models.layer import Layer
+from layers.layer import Layer
 
 class DenseLayer(Layer):
     def __init__(self, parent, units=None, dropout=None):

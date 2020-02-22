@@ -1,5 +1,5 @@
 from tensorflow.keras.layers import Input
-from models.layer import Layer
+from layers.layer import Layer
 
 class InputLayer(Layer):
     def __init__(self, parent, shape):
