@@ -9,8 +9,6 @@ class Parser():
         model = Model(config["loss"], config["optimizer"], config["activation"])
         prev = ""
         for layer in config["layers"]:
-            if layer["name"] in self.__rnn_names() and prev == "conv2d":
-                model.layers.append(ReshapeLayer(None, 3))
             model.layers.append(self.__parse_layer(layer))
             prev = layer["name"]
         return model
