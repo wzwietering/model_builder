@@ -3,10 +3,11 @@ import tensorflow.keras.models
 from layers.input_layer import InputLayer
 
 class Model():
-    def __init__(self, loss, optimizer, activation):
+    def __init__(self, loss, optimizer, activation, metrics=None):
         self.loss = loss
         self.optimizer = optimizer
         self.activation = activation
+        self.metrics = metrics
         self.root = None
         self.layers = []
 
@@ -28,5 +29,5 @@ class Model():
         model = Dense(output_shape)(model)
         activation = Activation(self.activation, name=self.activation)(model)
         model = tensorflow.keras.models.Model(inputs=input_layer, outputs=activation)
-        model.compile(optimizer=self.optimizer, loss=self.loss)
+        model.compile(optimizer=self.optimizer, loss=self.loss, metrics=self.metrics)
         return model

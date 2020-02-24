@@ -3,14 +3,14 @@ from layers.conv2d_layer import Conv2DLayer
 from layers.dense_layer import DenseLayer
 from layers.rnn_layer import RNNLayer
 from layers.reshape_layer import ReshapeLayer
+from layers.gaussian_noise_layer import GaussianNoiseLayer
 
 class Parser():
     def parse_config(self, config):
-        model = Model(config["loss"], config["optimizer"], config["activation"])
-        prev = ""
+        metrics = config.get("metrics", None)
+        model = Model(config["loss"], config["optimizer"], config["activation"], metrics)
         for layer in config["layers"]:
             model.layers.append(self.__parse_layer(layer))
-            prev = layer["name"]
         return model
 
     def __parse_layer(self, layer):
@@ -20,6 +20,8 @@ class Parser():
             return self.__parse_conv2d(layer)
         elif layer["name"] in self.__rnn_names():
             return self.__parse_rnn(layer)
+        elif layer["name"] == "gaussian_noise":
+            return GaussianNoiseLayer(None, layer["stddev"])
         else:
             raise ValueError(f"Unknown layer type '{layer['name']}'")
 

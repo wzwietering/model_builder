@@ -2,7 +2,12 @@
     "loss": "categorical_crossentropy",
     "optimizer": "adam",
     "activation": "softmax",
+    "metrics": ["mae", "acc"],
     "layers": [
+        {
+            "name": "gaussian_noise",
+            "stddev": 1.5
+        },
         {
             "name": "dense",
             "units": 40,
