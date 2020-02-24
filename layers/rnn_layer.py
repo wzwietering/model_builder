@@ -1,4 +1,4 @@
-from tensorflow.keras.layers import SimpleRNN, LSTM, GRU, Bidirectional, Dropout, Reshape
+from tensorflow.keras.layers import SimpleRNN, LSTM, GRU, Bidirectional
 from layers.layer import Layer
 
 class RNNLayer(Layer):
@@ -12,15 +12,14 @@ class RNNLayer(Layer):
         self.units = units
         self.bidirectional = bidirectional
         self.dropout = dropout
+        self.return_sequences = True
 
     def create(self, parent):
         layer_type = self.determine_layer()
-        layer = layer_type(self.units, return_sequences=True)
+        layer = layer_type(self.units, return_sequences=self.return_sequences, dropout=self.dropout)
         if self.bidirectional:
             layer = Bidirectional(layer)
         model = layer(parent)
-        if self.dropout:
-            model = Dropout(self.dropout)(model)
         return model
 
     def determine_layer(self):
