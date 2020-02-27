@@ -1,5 +1,5 @@
 from tensorflow.keras.layers import SimpleRNN, LSTM, GRU, Bidirectional
-from layers.layer import Layer
+from model_builder.layers.layer import Layer
 
 class RNNLayer(Layer):
     def __init__(self,

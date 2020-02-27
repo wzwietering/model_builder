@@ -1,6 +1,6 @@
 from tensorflow.keras.layers import Activation, Dense
 import tensorflow.keras.models
-from layers.input_layer import InputLayer
+from model_builder.layers.input_layer import InputLayer
 
 class Model():
     def __init__(self, loss, optimizer, activation, metrics=None):

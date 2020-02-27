@@ -1,5 +1,5 @@
 from tensorflow.keras.layers import GaussianNoise
-from layers.layer import Layer
+from model_builder.layers.layer import Layer
 
 class GaussianNoiseLayer(Layer):
     def __init__(self, parent, stddev):

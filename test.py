@@ -1,7 +1,7 @@
 import json
-import model_builder
-import model_parser
-import model_serializer
+from model_builder import model_builder
+from model_builder import model_parser
+from model_builder import model_serializer
 
 def test_config(filename, input_shape, output_shape=10):
     with open(filename, "r") as f:

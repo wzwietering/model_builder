@@ -1,9 +1,9 @@
-from model import Model
-from layers.conv2d_layer import Conv2DLayer
-from layers.dense_layer import DenseLayer
-from layers.rnn_layer import RNNLayer
-from layers.reshape_layer import ReshapeLayer
-from layers.gaussian_noise_layer import GaussianNoiseLayer
+from model_builder.model import Model
+from model_builder.layers.conv2d_layer import Conv2DLayer
+from model_builder.layers.dense_layer import DenseLayer
+from model_builder.layers.rnn_layer import RNNLayer
+from model_builder.layers.reshape_layer import ReshapeLayer
+from model_builder.layers.gaussian_noise_layer import GaussianNoiseLayer
 
 class Parser():
     def parse_config(self, config):

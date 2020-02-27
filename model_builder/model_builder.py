@@ -1,5 +1,5 @@
-from model_parser import Parser
-from model_analyzer import ModelAnalyzer
+from model_builder.model_parser import Parser
+from model_builder.model_analyzer import ModelAnalyzer
 
 class ModelBuilder():
     def __init__(self):

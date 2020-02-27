@@ -1,4 +1,4 @@
-from model import Model
+from model_builder.model import Model
 
 class ModelSerializer():
     def serialize(self, model):

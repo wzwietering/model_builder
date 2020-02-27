@@ -1,5 +1,5 @@
-from analyzers.analyzer import Analyzer
-from layers.reshape_layer import ReshapeLayer
+from model_builder.analyzers.analyzer import Analyzer
+from model_builder.layers.reshape_layer import ReshapeLayer
 
 class CRNNAnalyzer(Analyzer):
     def analyze(self, model):
