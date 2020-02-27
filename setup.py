@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name='model_builder',
-    version='0.1.0',
+    version='0.1.1',
     author="Wilmer Zwietering",
     author_email="wilmer@zwietering.com",
     description="Easily build Keras models from code or from a configuration file",
