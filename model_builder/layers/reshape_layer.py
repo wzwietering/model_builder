@@ -17,9 +17,11 @@ class ReshapeLayer(Layer):
 
     def __calculate_new(self, output_shape):
         if len(output_shape) <= self.target_dimension:
-            raise ValueError(f"Reshape only supported for reduction of dimensions, attempting to go from {len(output_shape)} to {self.target_dimension}")
+            raise ValueError(
+                f"Reshape only supported for reduction of dimensions, attempting to go from {len(output_shape)} to {self.target_dimension}"
+            )
         reductions = len(output_shape) - self.target_dimension
-        new_shape = list(output_shape)[1:] # first dimension is None for the batch size
+        new_shape = list(output_shape)[1:]  # first dimension is None for the batch size
         for _ in range(reductions):
             new_shape = self.__reduce_one(new_shape)
         return tuple(new_shape)

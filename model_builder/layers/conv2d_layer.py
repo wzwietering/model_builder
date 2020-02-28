@@ -1,15 +1,18 @@
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, AveragePooling2D
 from model_builder.layers.layer import Layer
 
+
 class Conv2DLayer(Layer):
-    def __init__(self,
-                 parent,
-                 filters=None,
-                 kernel_size=None,
-                 strides=None,
-                 max_pooling=None,
-                 average_pooling=None,
-                 dropout=None):
+    def __init__(
+        self,
+        parent,
+        filters=None,
+        kernel_size=None,
+        strides=None,
+        max_pooling=None,
+        average_pooling=None,
+        dropout=None,
+    ):
         super().__init__("conv2d", parent)
         self.filters = filters
         self.kernel_size = kernel_size

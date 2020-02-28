@@ -1,6 +1,7 @@
 {
     "loss": "categorical_crossentropy",
     "optimizer": "adam",
+    "learning_rate": "0.001",
     "activation": "softmax",
     "metrics": ["mae", "acc"],
     "layers": [

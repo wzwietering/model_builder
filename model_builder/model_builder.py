@@ -1,7 +1,8 @@
 from model_builder.model_parser import Parser
 from model_builder.model_analyzer import ModelAnalyzer
 
-class ModelBuilder():
+
+class ModelBuilder:
     def __init__(self):
         self.parser = Parser()
         self.model_analyzer = ModelAnalyzer()

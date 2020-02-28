@@ -5,10 +5,18 @@ from model_builder.layers.rnn_layer import RNNLayer
 from model_builder.layers.reshape_layer import ReshapeLayer
 from model_builder.layers.gaussian_noise_layer import GaussianNoiseLayer
 
-class Parser():
+
+class Parser:
     def parse_config(self, config):
         metrics = config.get("metrics", None)
-        model = Model(config["loss"], config["optimizer"], config["activation"], metrics)
+        learning_rate = config.get("learning_rate", None)
+        model = Model(
+            config["loss"],
+            config["optimizer"],
+            config["activation"],
+            metrics,
+            learning_rate,
+        )
         for layer in config["layers"]:
             model.layers.append(self.__parse_layer(layer))
         return model
@@ -32,11 +40,13 @@ class Parser():
     def __parse_conv2d(self, layer):
         filters = layer["filters"]
         kernel_size = tuple(layer["kernel_size"])
-        strides = self.__get_tuple(layer, "strides", (1,1))
+        strides = self.__get_tuple(layer, "strides", (1, 1))
         max_pooling = self.__get_tuple(layer, "max_pooling", None)
         average_pooling = self.__get_tuple(layer, "average_pooling", None)
         dropout = layer.get("dropout", None)
-        return Conv2DLayer(None, filters, kernel_size, strides, max_pooling, average_pooling, dropout)
+        return Conv2DLayer(
+            None, filters, kernel_size, strides, max_pooling, average_pooling, dropout
+        )
 
     def __parse_rnn(self, layer):
         bidirectional = layer.get("bidirectional", False)

@@ -1,7 +1,8 @@
 from model_builder.analyzers.rnn_return_sequences import RNNReturnSequences
 from model_builder.analyzers.crnn_analyzer import CRNNAnalyzer
 
-class ModelAnalyzer():
+
+class ModelAnalyzer:
     def __init__(self):
         self.analyzers = [RNNReturnSequences(), CRNNAnalyzer()]
 

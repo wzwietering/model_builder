@@ -1,12 +1,16 @@
 from model_builder.model import Model
 
-class ModelSerializer():
+
+class ModelSerializer:
     def serialize(self, model):
         serialized = dict()
         serialized["loss"] = model.loss
-        serialized["optimizer"] = model.optimizer
+        serialized["optimizer"] = model.optimizer.__class__.__name__.lower()
+        if model.learning_rate:
+            serialized["learning_rate"] = model.learning_rate
         serialized["activation"] = model.activation
-        if model.metrics: serialized["metrics"] = model.metrics
+        if model.metrics:
+            serialized["metrics"] = model.metrics
         serialized["layers"] = self.__serialize_layers(model.layers)
         return serialized
 
@@ -26,7 +30,6 @@ class ModelSerializer():
                 continue
         return serialized_layers
 
-
     def __serialize_dense(self, layer):
         dense = dict()
         dense["name"] = "dense"
@@ -39,18 +42,24 @@ class ModelSerializer():
         conv2d["name"] = "conv2d"
         conv2d["filters"] = layer.filters
         conv2d["kernel_size"] = list(layer.kernel_size)
-        if layer.strides != (1,1): conv2d["strides"] = list(layer.strides)
-        if layer.max_pooling: conv2d["max_pooling"] = list(layer.max_pooling)
-        if layer.average_pooling: conv2d["average_pooling"] = list(layer.average_pooling)
-        if layer.dropout: conv2d["dropout"] = layer.dropout
+        if layer.strides != (1, 1):
+            conv2d["strides"] = list(layer.strides)
+        if layer.max_pooling:
+            conv2d["max_pooling"] = list(layer.max_pooling)
+        if layer.average_pooling:
+            conv2d["average_pooling"] = list(layer.average_pooling)
+        if layer.dropout:
+            conv2d["dropout"] = layer.dropout
         return conv2d
 
     def __serialize_rnn(self, layer):
         rnn = dict()
         rnn["name"] = layer.name
         rnn["units"] = layer.units
-        if layer.bidirectional: rnn["bidirectional"] = layer.bidirectional
-        if layer.dropout: rnn["dropout"] = layer.dropout
+        if layer.bidirectional:
+            rnn["bidirectional"] = layer.bidirectional
+        if layer.dropout:
+            rnn["dropout"] = layer.dropout
         return rnn
 
     def __serialize_gaussian_noise(self, layer):

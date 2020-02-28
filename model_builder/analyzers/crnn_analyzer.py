@@ -1,6 +1,7 @@
 from model_builder.analyzers.analyzer import Analyzer
 from model_builder.layers.reshape_layer import ReshapeLayer
 
+
 class CRNNAnalyzer(Analyzer):
     def analyze(self, model):
         prev = None
