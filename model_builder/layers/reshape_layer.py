@@ -21,8 +21,9 @@ class ReshapeLayer(Layer):
                 f"Reshape only supported for reduction of dimensions, attempting to go from {len(output_shape)} to {self.target_dimension}"
             )
         reductions = len(output_shape) - self.target_dimension
-        new_shape = list(output_shape)[1:]  # first dimension is None for the batch size
-        for _ in range(reductions):
+        # first dimension is None for the batch size
+        new_shape = list(output_shape)[1:]
+        while len(new_shape) > 1 and len(new_shape) + 1 > self.target_dimension:
             new_shape = self.__reduce_one(new_shape)
         return tuple(new_shape)
 
