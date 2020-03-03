@@ -4,8 +4,8 @@ with open("README.md", "r") as f:
     readme = f.read()
 
 setuptools.setup(
-    name='model_builder',
-    version='0.1.2',
+    name="model_builder",
+    version="0.2.0",
     author="Wilmer Zwietering",
     author_email="wilmer@zwietering.com",
     description="Easily build Keras models from code or from a configuration file",
@@ -21,5 +21,5 @@ setuptools.setup(
         "Topic :: Utilities",
     ],
     install_requires=["tensorflow"],
-    python_requires='>=3.6',
+    python_requires=">=3.6",
 )

@@ -67,5 +67,5 @@ if __name__ == "__main__":
     test_config("examples/model_rnn.json", (28, 28))
     test_config("examples/model_crnn.json", (28, 28, 1))
     test_config("examples/model_mnist.json", (28, 28, 1))
-    # test_mnist()
+    test_mnist()
     test_optimization("examples/model_mnist.json")
