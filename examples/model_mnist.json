@@ -1,0 +1,27 @@
+{
+    "loss": "categorical_crossentropy",
+    "optimizer": "adam",
+    "activation": "softmax",
+    "metrics": [
+        "accuracy"
+    ],
+    "layers": [
+        {
+            "name": "conv2d",
+            "filters": 28,
+            "kernel_size": [
+                3,
+                3
+            ],
+            "max_pooling": [
+                2,
+                2
+            ]
+        },
+        {
+            "name": "dense",
+            "units": 128,
+            "dropout": 0.2
+        }
+    ]
+}

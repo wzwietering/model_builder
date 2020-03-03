@@ -22,15 +22,26 @@ class Model:
         self.root = root
 
     def create(self, input_shape, output_shape):
+        if type(output_shape) is int:
+            output_dim = 1
+        else:
+            output_dim = len(output_shape)
         self.set_input_shape(input_shape)
         input_layer = self.root.create()
         model = input_layer
         for layer in self.layers:
             model = layer.create(model)
+        if len(model.shape) > output_dim:
+            reshape = ReshapeLayer(model, output_dim)
+            model = reshape.create(model)
         model = Dense(output_shape)(model)
         activation = Activation(self.activation, name=self.activation)(model)
-        model = tensorflow.keras.models.Model(inputs=input_layer, outputs=activation)
-        model.compile(optimizer=self.optimizer, loss=self.loss, metrics=self.metrics)
+        model = tensorflow.keras.models.Model(
+            inputs=input_layer, outputs=activation
+        )
+        model.compile(
+            optimizer=self.optimizer, loss=self.loss, metrics=self.metrics
+        )
         return model
 
     def set_optimizer(self, name, learning_rate=None):
