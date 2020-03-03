@@ -1,33 +1,39 @@
 import math
 from model_builder.optimization.optimizer import Optimizer
+from model_builder.optimization.goal import Goal
 
 # Optimize a model using hill climb
 class HillClimb(Optimizer):
-    def __init__(self, step_fraction=0.01):
+    def __init__(self, goal=Goal(), step_fraction=0.1):
         # Step fraction is the amount of change applied to a variable per step,
         # expressed as fraction of the value. Integer parameters are rounded
+        super().__init__(goal)
         self.step_fraction = step_fraction
 
-    def __optimize_parameter(
-        self, model, trainX, trainY, hyperparameters, name
-    ):
+    def optimize_parameter(self, model, trainX, trainY, hyperparameters, name):
         flipped = False  # Did we change direction already?
         increase = True  # Direction of the climb
         while True:
             old_value = hyperparameters.get(name)
             hyperparameters.set(name, self.__next_value(old_value, increase))
-            new_loss = super(HillClimb, self).__fit(
+            new_score = super(HillClimb, self).fit(
                 model, trainX, trainY, hyperparameters
             )
-            if new_loss >= self.best_score and not flipped:
+            if new_score <= self.best_score and not flipped:
                 hyperparameters.set(name, old_value)
                 increase = not (increase)
                 flipped = True
-            elif new_loss < self.best_score:
+            elif new_score > self.best_score:
+                print(
+                    f"Improved the score from {self.best_score} to {new_score} by changing {name} from {old_value} to {hyperparameters.get(name)}"
+                )
                 self.best_params = hyperparameters
-                self.best_score = new_loss
+                self.best_score = new_score
             else:
-                return  # No improvement, and we changed direction already
+                print(f"Done optimizing {name}")
+                hyperparameters.set(name, old_value)
+                # No improvement, and we changed direction already
+                return model, hyperparameters
 
     def __next_value(self, value, increase=True):
         if type(value) is int:

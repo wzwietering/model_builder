@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This is a tool build Keras models a lot faster than by coding. No coding is required, all can be done from a configuration file. The ModelBuilder not only builds a model from your configuration, but it also tries to make this process easier. Using analyzers your model is analyzed to prevent errors. For completeness, a serializer is also included to convert your model to a configuration file.
+This is a tool build Keras models a lot faster than by coding. No coding is required, all can be done from a configuration file. The ModelBuilder not only builds a model from your configuration, but it also tries to make this process easier. Using analyzers your model is analyzed to prevent errors. For completeness, a serializer is also included to convert your model to a configuration file. There is also a framework present for hyperparameter optimalization, but this is currently limited to [Hill Climbing](https://en.wikipedia.org/wiki/Hill_climbing).
 
 ## Configuration parameters
 
@@ -13,6 +13,7 @@ Currently the code supports the following parameters:
   * Activation
   * Optimizer
   * Metrics (optional)
+  * Learning rate (optional)
 * Dense layers
   * Units
   * Dropout (optional)
