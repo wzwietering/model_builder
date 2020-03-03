@@ -2,6 +2,7 @@ from tensorflow.keras.layers import Activation, Dense
 import tensorflow.keras.optimizers
 import tensorflow.keras.models
 from model_builder.layers.input_layer import InputLayer
+from model_builder.layers.reshape_layer import ReshapeLayer
 
 
 class Model:
@@ -36,12 +37,8 @@ class Model:
             model = reshape.create(model)
         model = Dense(output_shape)(model)
         activation = Activation(self.activation, name=self.activation)(model)
-        model = tensorflow.keras.models.Model(
-            inputs=input_layer, outputs=activation
-        )
-        model.compile(
-            optimizer=self.optimizer, loss=self.loss, metrics=self.metrics
-        )
+        model = tensorflow.keras.models.Model(inputs=input_layer, outputs=activation)
+        model.compile(optimizer=self.optimizer, loss=self.loss, metrics=self.metrics)
         return model
 
     def set_optimizer(self, name, learning_rate=None):
