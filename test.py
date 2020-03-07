@@ -57,8 +57,13 @@ def test_optimization(config):
     mp = Parser()
     model = mp.parse_config(config)
 
-    hc = HillClimb(Goal("val_accuracy", Strategy.MINIMIZE))
-    hyp = HyperParameters(0.0001, 2, 0.2)
+    hc = HillClimb(Goal("val_accuracy", Strategy.MAXIMIZE))
+    hyp_dict = {
+        "learning_rate": {"min": 0.0001, "max": 0.001, "start": 0.0001},
+        "epochs": {"min": 1, "max": 100, "start": 2},
+        "validation_split": {"min": 0.1, "max": 0.3, "start": 0.2},
+    }
+    hyp = HyperParameters(**hyp_dict)
     hc.optimize(model, trainX, trainY, hyp)
 
 

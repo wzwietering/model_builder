@@ -1,3 +1,4 @@
+import copy
 import math
 from model_builder.optimization.optimizer import Optimizer
 from model_builder.optimization.goal import Goal
@@ -14,39 +15,47 @@ class HillClimb(Optimizer):
         flipped = False  # Did we change direction already?
         increase = True  # Direction of the climb
         while True:
-            old_value = hyperparameters.get(name)
+            old_value = copy.deepcopy(hyperparameters.get(name))
             hyperparameters.set(name, self.__next_value(old_value, increase))
             new_score = super(HillClimb, self).fit(
                 model, trainX, trainY, hyperparameters
             )
             if new_score <= self.best_score and not flipped:
-                hyperparameters.set(name, old_value)
+                hyperparameters.set(name, old_value.value)
                 increase = not (increase)
                 flipped = True
             elif new_score > self.best_score:
                 print(
-                    f"Improved the score from {self.best_score} to {new_score} by changing {name} from {old_value} to {hyperparameters.get(name)}"
+                    f"Improved the score from {self.best_score} to {new_score} by changing {name} from {old_value.value} to {hyperparameters.get(name).value}"
                 )
                 self.best_params = hyperparameters
                 self.best_score = new_score
             else:
+                hyperparameters.set(name, old_value.value)
                 print(f"Done optimizing {name}")
-                hyperparameters.set(name, old_value)
                 # No improvement, and we changed direction already
                 return model, hyperparameters
 
-    def __next_value(self, value, increase=True):
-        if type(value) is int:
+    def __next_value(self, parameter, increase=True):
+        if type(parameter.value) is int:
             # For integer we use floor and ceil to 'force' the direction, as
             # small fractions would cause no changes to integer values
             if increase:
-                return int(math.ceil(value * (1 + self.step_fraction)))
+                return min(
+                    int(math.ceil(parameter.value * (1 + self.step_fraction))),
+                    parameter.max,
+                )
             else:
-                return int(math.floor(value * (1 - self.step_fraction)))
-        elif type(value) is float:
+                return max(
+                    int(math.floor(parameter.value * (1 - self.step_fraction))),
+                    parameter.min,
+                )
+        elif type(parameter.value) is float:
             if increase:
-                return value * (1 + self.step_fraction)
+                return min(parameter.value * (1 + self.step_fraction), parameter.max)
             else:
-                return value * (1 - self.step_fraction)
+                return max(parameter.value * (1 - self.step_fraction), parameter.min)
         else:
-            raise ValueError(f"Value {value} of unknown type {type(value)}")
+            raise ValueError(
+                f"Value {parameter.value} of unknown type {type(parameter.value)}"
+            )

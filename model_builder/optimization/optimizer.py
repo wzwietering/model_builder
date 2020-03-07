@@ -22,7 +22,7 @@ class Optimizer:
                 model, trainX, trainY, hyperparameters, name
             )
         print(
-            f"Optimal score is {self.best_score * self.goal.strategy.value} with the parameters {hyperparameters.parameters()}"
+            f"Optimal score is {self.best_score * self.goal.strategy.value} with the parameters {hyperparameters.values()}"
         )
         return hyperparameters
 
@@ -30,11 +30,12 @@ class Optimizer:
     def fit(self, model, trainX, trainY, hyperparameters):
         input_shape = trainX.shape[1:]
         output_shape = trainY.shape[-1]
+        model.set_learning_rate(hyperparameters.get("learning_rate").value)
         compiled_model = model.create(input_shape, output_shape)
         history = compiled_model.fit(
             trainX,
             trainY,
-            epochs=hyperparameters.epochs,
-            validation_split=hyperparameters.validation_split,
+            epochs=hyperparameters.get("epochs").value,
+            validation_split=hyperparameters.get("validation_split").value,
         )
         return history.history[self.goal.metric][-1] * self.goal.strategy.value
