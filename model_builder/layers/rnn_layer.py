@@ -11,7 +11,7 @@ class RNNLayer(Layer):
         self.return_sequences = True
 
     def create(self, parent):
-        layer_type = self.determine_layer()
+        layer_type = self.__determine_layer()
         layer = layer_type(
             self.units, return_sequences=self.return_sequences, dropout=self.dropout
         )
@@ -20,12 +20,12 @@ class RNNLayer(Layer):
         model = layer(parent)
         return model
 
-    def determine_layer(self):
-        if self.name == "rnn":
+    def __determine_layer(self):
+        if self.name.lower() == "rnn":
             return SimpleRNN
-        elif self.name == "lstm":
+        elif self.name.lower() == "lstm":
             return LSTM
-        elif self.name == "gru":
+        elif self.name.lower() == "gru":
             return GRU
         else:
             raise ValueError(f"Unknown recurrent layer type '{self.name}'")
