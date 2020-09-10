@@ -1,12 +1,12 @@
 import json
 
-from model_builder.model_parser import Parser
+from model_builder.model_parser import ModelParser
 from model_builder.model_analyzer import ModelAnalyzer
 
 
 class ModelBuilder:
     def __init__(self):
-        self.parser = Parser()
+        self.parser = ModelParser()
         self.model_analyzer = ModelAnalyzer()
 
     def build_model(self, config_file, input_shape, output_shape):

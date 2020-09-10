@@ -3,7 +3,7 @@ import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 import tensorflow.keras.utils
 from model_builder import ModelBuilder
-from model_builder import Parser
+from model_builder import ModelParser
 from model_builder import ModelSerializer
 from model_builder import HillClimb
 from model_builder import HyperParameters
@@ -23,7 +23,7 @@ def test_parser(config, input_shape, output_shape):
 
 
 def test_serializer(config):
-    mp = Parser()
+    mp = ModelParser()
     model = mp.parse_config(config)
     ms = ModelSerializer()
     serialized = ms.serialize(model)
@@ -54,7 +54,7 @@ def test_optimization(config):
     trainX, trainY, testX, testY = get_mnist(num_classes)
     with open("examples/model_mnist.json", "r") as f:
         config = json.load(f)
-    mp = Parser()
+    mp = ModelParser()
     model = mp.parse_config(config)
 
     hc = HillClimb(Goal("val_accuracy", Strategy.MAXIMIZE))

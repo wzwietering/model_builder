@@ -6,7 +6,7 @@ from model_builder.layers.reshape_layer import ReshapeLayer
 from model_builder.layers.gaussian_noise_layer import GaussianNoiseLayer
 
 
-class Parser:
+class ModelParser:
     def parse_config(self, config):
         metrics = config.get("metrics", None)
         learning_rate = config.get("learning_rate", None)
